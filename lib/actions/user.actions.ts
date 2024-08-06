@@ -10,7 +10,7 @@ import { connectDB } from "../mongoose";
 
 export async function fetchUser(userId: string) {
   try {
-    connectDB();
+    await connectDB();
 
     return await User.findOne({ id: userId }).populate({
       path: "communities",
@@ -39,7 +39,7 @@ export async function updateUser({
   image,
 }: Params): Promise<void> {
   try {
-    connectDB();
+    await connectDB();
 
     await User.findOneAndUpdate(
       { id: userId },
@@ -63,7 +63,7 @@ export async function updateUser({
 
 export async function fetchUserPosts(userId: string) {
   try {
-    connectDB();
+    await connectDB();
 
     // Find all threads authored by the user with the given userId
     const threads = await User.findOne({ id: userId }).populate({
@@ -108,7 +108,7 @@ export async function fetchUsers({
   sortBy?: SortOrder;
 }) {
   try {
-    connectDB();
+    await connectDB();
 
     // Calculate the number of users to skip based on the page number and page size.
     const skipAmount = (pageNumber - 1) * pageSize;
@@ -154,7 +154,7 @@ export async function fetchUsers({
 
 export async function getActivity(userId: string) {
   try {
-    connectDB();
+    await connectDB();
 
     // Find all threads created by the user
     const userThreads = await Thread.find({ author: userId });
